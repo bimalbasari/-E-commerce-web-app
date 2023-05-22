@@ -24,6 +24,7 @@ const LeftComponent = styled(Box)(({ theme }) => ({
 // `;
 
 const CartItem = ({ item }) => {
+  console.log(item)
   return (
     <Box sx={{ backgroundColor: '#fff', padding: 2, borderRadius: 2 }}>
       <Component>

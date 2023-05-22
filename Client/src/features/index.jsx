@@ -5,22 +5,22 @@ import axios from "axios";
 // const token = Cookies.get('token'); // Retrieve the token from the cookie
 // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 const headers = {
-    Authorization: `Bearer ${Cookies.get('token')}`,
-    'Content-Type': 'application/json',
+  Authorization: `Bearer ${Cookies.get('token')}`,
+  'Content-Type': 'application/json',
 };
 
 const url = `http://localhost:3000`;
 
 export const getProduct = createAsyncThunk(
-    "Products/getData",
-    async () => {
-        try {
-            let response = await axios.get(`${url}/products `);
-            return response.data
-        } catch (err) {
-            console.log("error while calling get products api", err.message);
-        }
-    })
+  "Products/getData",
+  async () => {
+    try {
+      let response = await axios.get(`${url}/products `);
+      return response.data
+    } catch (err) {
+      console.log("error while calling get products api", err.message);
+    }
+  })
 
 // export const productDetails = createAsyncThunk(
 //     "productDetails",
@@ -34,65 +34,65 @@ export const getProduct = createAsyncThunk(
 
 //     })
 const saveCartToLocalStorage = (cart) => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  };
+  localStorage.setItem('cart', JSON.stringify(cart));
+};
 export const addCart = createAsyncThunk(
-    "cart/addCart",
-    async ({_id, quantity}) => {
-        try {
-            let Cart = await axios.get(`${url}/product/${_id}/${quantity}`, { headers })
+  "cart/addCart",
+  async ({ _id, quantity }) => {
+    try {
+      let Cart = await axios.get(`${url}/product/${_id}/${quantity}`, { headers })
 
-            return Cart.data
-            // console.log(Cart.data.cart.length)
-        } catch (err) {
-            console.log("error while calling get product api", err.message);
-        }
-    })
+      return Cart.data
+      console.log("Cart.data.cart.length")
+    } catch (err) {
+      console.log("error while calling get product api", err.message);
+    }
+  })
 
 
 export const userSlice = createSlice({
-    name: 'user',
-    initialState: {
-        value: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).user : null,
+  name: 'user',
+  initialState: {
+    value: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).user : null,
+  },
+  reducers: {
+    login: (state, action) => {
+      state.value = action.payload;
+      localStorage.setItem('user', JSON.stringify(action.payload));
     },
-    reducers: {
-        login: (state, action) => {
-            state.value = action.payload;
-            localStorage.setItem('user', JSON.stringify(action.payload));
-        },
-        logout: (state) => {
-            state.value = null;
-            localStorage.removeItem('user');
-            window.location.href = '/'; // Reload to home page
-        },
+    logout: (state) => {
+      state.value = null;
+      localStorage.removeItem('user');
+      window.location.href = '/'; // Reload to home page
     },
+  },
 });
 
 
 
 
 export const productSlice = createSlice({
-    name: "products",
-    initialState: {
-        products: [],
-        loading: false,
-        error: null,
-    },
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(getProduct.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(getProduct.fulfilled, (state, action) => {
-                state.loading = false;
-                state.products = action.payload;
-            })
-            .addCase(getProduct.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            });
-    },
+  name: "products",
+  initialState: {
+    products: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(getProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
 
@@ -142,10 +142,10 @@ export const { login, logout } = userSlice.actions;
 export const { removeItem } = cartSlice.actions;
 
 const rootReducer = combineReducers({
-    user: userSlice.reducer,
-    products: productSlice.reducer,
-    cartSlice: cartSlice.reducer,
-    // product: product.reducer,
+  user: userSlice.reducer,
+  products: productSlice.reducer,
+  cartSlice: cartSlice.reducer,
+  // product: product.reducer,
 });
 
 export default rootReducer

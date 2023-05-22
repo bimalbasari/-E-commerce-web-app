@@ -16,20 +16,29 @@ export const getProduct = async (req, res) => {
 
 export const addCart = async (req, res) => {
     const { id, quantity } = req.params;
-    console.log(id, quantity, "from query");
     const userinfo = res.userInfo;
     try {
-        await User.updateOne(
+        const result = await User.updateOne(
             {
                 _id: userinfo._id,
                 cart: { $elemMatch: { id: id } }
-            },
-            {
-                $inc: { "cart.$.quantity": parseInt(quantity) }
+            }, {
+            $inc: { "cart.$.quantity": parseInt(quantity) }
+        },)
+
+        if (result.matchedCount === 0) {
+            await User.updateOne(
+                {
+                    _id: userinfo._id,
+                    // cart: { $elemMatch: { id: id } }
+                }, {
+                upsert: true,  // Add a new item if no match is found
+                $addToSet: { cart: { id: id, quantity: parseInt(quantity) } }
             }
-        );
-        // const updatedUser = await User.findById(userinfo._id);
-        // res.status(200).json({ cart: updatedUser.cart })
+            );
+        }
+        const updatedUser = await User.findById(userinfo._id);
+        res.status(200).json({ cart: updatedUser.cart })
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "Internal server error" });
