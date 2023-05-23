@@ -32,13 +32,16 @@ const ActionItem = ({ product }) => {
         localStorage.removeItem('item');
 
     }
+    const buyNow = () => {
+        navigate("/ship")
+    }
 
     return (
         <>
             <Image src={product.detailUrl} />
             <div>
                 <StyleBtn variant='contained' sx={{ marginRight: "2%", background: '#ff9f00', }} startIcon={<AddShoppingCartIcon />} onClick={addToCart}>Add to cart</StyleBtn>
-                <StyleBtn variant='contained' sx={{ background: '#fb641b' }} startIcon={<BoltIcon />}>Buy now</StyleBtn>
+                <StyleBtn variant='contained' onClick={buyNow} sx={{ background: '#fb641b' }} startIcon={<BoltIcon />}>Buy now</StyleBtn>
 
             </div>
             <br />

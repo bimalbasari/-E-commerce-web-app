@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import EmptyCart from "./EmptyCart";
 import CartItem from "./CartItem";
 import Total from "./Total";
-import { useEffect} from "react";
+import { useEffect } from "react";
 
 const Component = styled(Grid)(({ theme }) => ({
   padding: '30px 135px',
@@ -44,7 +44,9 @@ const Cart = () => {
   const NavigateToHome = () => {
     navigate("/")
   }
-
+  const buyNow = () => {
+    navigate("/ship")
+  }
   return (
     <>
       {
@@ -61,7 +63,7 @@ const Cart = () => {
                 <Button sx={{ textTransform: "none", textDecoration: "underline" }} onClick={NavigateToHome}>
                   Continue to shopping
                 </Button>
-                <Button variant="contained" sx={{ background: "#fb6b1b" }}>
+                <Button variant="contained" onClick={buyNow} sx={{ background: "#fb6b1b" }}>
                   Place Order
                 </Button>
               </BottomWrapper>

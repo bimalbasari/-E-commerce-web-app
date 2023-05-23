@@ -14,6 +14,7 @@ const CartButton = ({ item }) => {
     const removeCartItem = () => {
         dispatch(removeItem(_id))
     }
+   
 
     return (
         <Box

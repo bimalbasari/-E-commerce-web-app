@@ -17,6 +17,7 @@ export const getProduct = async (req, res) => {
 export const addCart = async (req, res) => {
     const { id, quantity } = req.params;
     const userinfo = res.userInfo;
+  
     try {
         const result = await User.updateOne(
             {
