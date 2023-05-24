@@ -35,7 +35,6 @@ const BottomWrapper = styled(Box)`
 
 const Cart = () => {
   const { cart } = useSelector((state) => state.cartSlice);
-  console.log(cart)
   const user = useSelector(state => state.user.value)
   useEffect(() => {
     if (user === null) navigate("/")
@@ -56,7 +55,7 @@ const Cart = () => {
               <Items>
                 <Typography variant="h6">My Cart ({cart.length})</Typography>
               </Items>
-              {cart.map((item, key) => (
+              {cart && cart.map((item, key) => (
                 <CartItem item={item} key={key} />
               ))}
               <BottomWrapper>

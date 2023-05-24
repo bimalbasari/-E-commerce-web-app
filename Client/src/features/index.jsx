@@ -1,13 +1,14 @@
 import Cookies from 'js-cookie';
 import { createSlice, combineReducers, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
 // const token = Cookies.get('token'); // Retrieve the token from the cookie
 // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+const token = Cookies.get('token')
 const headers = {
-  Authorization: `Bearer ${Cookies.get('token')}`,
+  Authorization: `Bearer ${token}`,
   'Content-Type': 'application/json',
 };
+console.log(token)
 
 const url = `http://localhost:3000`;
 
@@ -40,10 +41,13 @@ export const addCart = createAsyncThunk(
   "cart/addCart",
   async ({ _id, quantity }) => {
     try {
-      let Cart = await axios.get(`${url}/product/${_id}/${quantity}`, { headers })
-
-      return Cart.data
-      console.log("Cart.data.cart.length")
+      if (headers.Authorization.length <= 16) {
+        alert("Pleace login again “Invalid Token” ")
+        window.location.href = '/';
+      } else {
+        let Cart = await axios.get(`${url}/product/${_id}/${quantity}`, { headers })
+        return Cart.data
+      }
     } catch (err) {
       console.log("error while calling get product api", err.message);
     }

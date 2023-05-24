@@ -21,7 +21,7 @@ font-family:inherit;
 const Navbar = () => {
     return (
         <Component elevation={1}>
-            {navData.map((data, key) =>
+            {navData && navData.map((data, key) =>
             (
                 <Box key={key} style={{ padding: "12px 8px", textAlign: "center" }}>
                     <img src={data.url} style={{

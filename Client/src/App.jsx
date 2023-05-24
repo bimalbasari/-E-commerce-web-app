@@ -10,11 +10,11 @@ import LoginDialog from "./components/login/LoginDialog";
 import ShippingPage from "./components/shiping/ShippingPage";
 
 
-
 const App = () => {
-  const [open, setOpen] = useState(true);
+const [open,setOpen]=useState(true)
 
   return (
+
     <BrowserRouter>
       <Header />
       <Box style={{ "marginTop": "56px" }}>
