@@ -28,3 +28,7 @@ export const authenticatecLogin = async (data) => {
     }
 }
 
+
+export const order=async(data)=>{
+axios.post(`${url}/order`,data)
+}

@@ -17,6 +17,7 @@ export const getProduct = async (req, res) => {
 export const addCart = async (req, res) => {
     const { id, quantity } = req.params;
     const userinfo = res.userInfo;
+    req.body
   
     try {
         const result = await User.updateOne(
@@ -40,6 +41,7 @@ export const addCart = async (req, res) => {
         }
         const updatedUser = await User.findById(userinfo._id);
         res.status(200).json({ cart: updatedUser.cart })
+        
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "Internal server error" });

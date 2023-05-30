@@ -1,3 +1,4 @@
+/**Product information  sample data  */
 export const products = [
     {
         id: 'product1',

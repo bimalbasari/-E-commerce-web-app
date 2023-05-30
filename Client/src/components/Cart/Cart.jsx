@@ -5,6 +5,8 @@ import EmptyCart from "./EmptyCart";
 import CartItem from "./CartItem";
 import Total from "./Total";
 import { useEffect } from "react";
+import axios from "axios";
+import { order } from "../../services/Api";
 
 const Component = styled(Grid)(({ theme }) => ({
   padding: '30px 135px',
@@ -43,8 +45,12 @@ const Cart = () => {
   const NavigateToHome = () => {
     navigate("/")
   }
-  const buyNow = () => {
+  const placeOrder = () => {
+     // test
+    order(cart)
     navigate("/ship")
+   
+   
   }
   return (
     <>
@@ -62,7 +68,7 @@ const Cart = () => {
                 <Button sx={{ textTransform: "none", textDecoration: "underline" }} onClick={NavigateToHome}>
                   Continue to shopping
                 </Button>
-                <Button variant="contained" onClick={buyNow} sx={{ background: "#fb6b1b" }}>
+                <Button variant="contained" onClick={placeOrder} sx={{ background: "#fb6b1b" }}>
                   Place Order
                 </Button>
               </BottomWrapper>

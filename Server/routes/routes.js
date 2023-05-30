@@ -12,7 +12,8 @@ router.post("/signin", userSignin);
 router.get("/products", getProduct);
 
 router.get("/product/:id/:quantity", fetchUser, getProductById);
-
+// router.get("")
+router.post("/order",addCart)
 
 
 router.use("*", (req, res) => {
